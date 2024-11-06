@@ -15,8 +15,8 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-       <div class="">
-        <h1 class="text-lg">受注入力システム</h1>
+       <div class="max-w-screen-lg mx-auto px-8">
+        <h1 class="text-xl font-bold pt-4">受注入力システム</h1>
         <main>
             {{ $slot }}
         </main>
