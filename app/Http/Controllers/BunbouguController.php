@@ -87,7 +87,7 @@ class BunbouguController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
          $request->validate([
             'name'           => 'required|max:20',
@@ -96,17 +96,11 @@ class BunbouguController extends Controller
             'detail'         => 'required|max:140',
         ]);
 
-       
+        $hasData = Bunbougu::find($id);
+        $hasData->update($request->all());
 
-        $hasData = Bunbougu::where('id','=',$request->id);
-
-        if($hasData->exists()){
-            $hasData->update([
-                'name'          =>$request->name,
-                'price'         =>$request->price,
-                'classification'=>$request->classification,
-                'detail'        =>$request->detail,
-            ]);
+        
+        if($hasData){
             session()->flash('flash_message','変更しました');
         } else {
             session()->flash('flash_error_message','変更失敗');
