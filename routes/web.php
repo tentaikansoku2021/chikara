@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BunbouguController;
 
 Route::get('/', function () {
-    return view('welcome');
+    Route::get('bunbougu',[BunbouguController::class,'index'])->name('bunbougu.index');
 });
 
 Route::get('/dashboard', function () {

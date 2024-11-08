@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bunbougu;
+use App\Models\Classification;
 use Illuminate\Http\Request;
 
 class BunbouguController extends Controller
@@ -12,7 +13,7 @@ class BunbouguController extends Controller
      */
     public function index()
     {
-        $bunbougus = Bunbougu::latest()->paginate(5);
+        $bunbougus = Bunbougu::latest()->paginate(8);
 
         return view('index',compact('bunbougus'))
         ->with('i',(request()->input('page',1)-1)*5);
@@ -23,7 +24,9 @@ class BunbouguController extends Controller
      */
     public function create()
     {
-        //
+        $classifications = Classification::all();
+        return view('create',compact('classifications'));
+               
     }
 
     /**
@@ -31,7 +34,12 @@ class BunbouguController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:20',
+            'price' => 'required|integer',
+            'classification' => 'required|integer', 
+            'detail' => 'required|max:140',
+        ]);
     }
 
     /**
