@@ -12,34 +12,35 @@
             @csrf
             <div class="">
                 <div class="mb-4 mt-4">
-                    <input type="text" name="name" class="w-full" placeholder="名前">
+                    <input type="text" name="name" class="w-full" placeholder="名前" value="{{old('name')}}">
                     @error('name')
-                    <span class="text-red-800">名前を20文字以内で入力してください</span>
+                    <span class="text-red-700">名前を20文字以内で入力してください</span>
                     @enderror
                 </div>
                 <div class="mb-4 mt-4">
-                    <input type="text" name="price" class="w-full" placeholder="価格">
-                    @error('name')
-                    <span class="text-red-800">数字で入力してください</span>
+                    <input type="text" name="price" class="w-full" placeholder="価格" value="{{old('price')}}">
+                    @error('price')
+                    <span class="text-red-700">数字で入力してください</span>
                     @enderror
                 </div>
 
                 <div class="mb-4 mt-4">
                     <select name="classification" class="w-full">
-                        <option value="">分類を選択してください</option>
+                        <option value="" name="classification">分類を選択してください</option>
                         @foreach($classifications as $classification)
-                        <option value="{{ $classification->id }}">{{ $classification->str }}</option>
+                        <option value="{{ $classification->id }}"
+                        @if(old('classification') == $classification->id) selected @endif>{{ $classification->str }}</option>
                         @endforeach
                     </select>
                     @error('classification')
-                    <span class="text-red-800">分類を選んでください</span>
+                    <span class="text-red-700">分類を選択してください</span>
                     @enderror
                 </div>
 
                 <div class="mb-4 mt-4">
-                    <textarea type="" name="detail" class="w-full" placeholder="詳細"></textarea>
+                    <textarea name="detail" class="w-full" placeholder="詳細">{{old('detail')}}</textarea>
                     @error('detail')
-                    <span class="text-red-800">140文字以内で入力してください</span>
+                    <span class="text-red-700">140文字以内で入力してください</span>
                     @enderror
                 </div>
             </div>
