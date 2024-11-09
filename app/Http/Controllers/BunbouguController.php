@@ -28,6 +28,7 @@ class BunbouguController extends Controller
         ->orderBy('b.id','ASC')->paginate(8);
 
         return view('index',compact('bunbougus'))
+        ->with('page_id',request()->page)
         ->with('i',(request()->input('page',1)-1)*5);
     }
 
@@ -58,21 +59,23 @@ class BunbouguController extends Controller
         $result = Bunbougu::create($input);
 
         if(!empty($result)) {
-            session()->flash('flash_message','登録しました');
+            session()->flash('flash_message',$request->name.'  を登録しました');
         } else {
             session()->flash('flash_message','登録失敗');
         }
 
        return redirect()->route('bunbougu.index');
 
-    }
+    } 
 
     /**
      * Display the specified resource.
      */
     public function show(Bunbougu $bunbougu)
     {
-        //
+        $classifications = Classification::all();
+        return view('show',compact('classifications','bunbougu'))
+        ->with('page_id',request()->page_id);
     }
 
     /**
@@ -80,9 +83,12 @@ class BunbouguController extends Controller
      */
     public function edit(Bunbougu $bunbougu)
     {
-        $classification = Classification::all();
-        return view('edit',compact('bunbougu'))->with('classifications',$classification);
+        $classifications = Classification::all();
+        return view('edit',compact('bunbougu','classifications'))
+        ->with('page_id',request()->page_id);
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -107,7 +113,6 @@ class BunbouguController extends Controller
         }
 
        return redirect('/');
-
     }
 
     /**
