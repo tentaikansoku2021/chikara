@@ -4,9 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BunbouguController;
 
-Route::get('/', function () {
-    Route::get('bunbougu',[BunbouguController::class,'index'])->name('bunbougu.index');
-});
+Route::get('/',[BunbouguController::class,'index']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -13,6 +13,6 @@ class BunbougusSeeder extends Seeder
      */
     public function run(): void
     {
-      Bunbougu::factory()->count(10)->create(); 
+      Bunbougu::factory()->count(20)->create(); 
     }
 }

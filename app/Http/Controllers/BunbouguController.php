@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bunbougu;
 use App\Models\Classification;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class BunbouguController extends Controller
 {
@@ -19,11 +20,16 @@ class BunbouguController extends Controller
             'b.name',
             'b.price',
             'b.detail',
+            'b.user_id',
+            'u.name as user_name',
             'c.str as classification',
         ])
         ->from('bunbougus as b')
         ->join('classifications as c',function($join){
             $join->on('b.classification','=','c.id');
+        })
+        ->join('users as u', function($join) {
+            $join->on('b.user_id', '=', 'u.id');
         })
         ->orderBy('b.id','ASC')->paginate(8);
 
@@ -54,11 +60,17 @@ class BunbouguController extends Controller
             'detail' => 'required|max:140',
         ]);
 
-        $input=$request->all();
 
-        $result = Bunbougu::create($input);
+        // $result = Bunbougu::create($input);
+        $bunbougu = new Bunbougu;
+        $bunbougu->name = $request->input(['name']);
+        $bunbougu->price = $request->input(['price']);
+        $bunbougu->classification = $request->input(['classification']);
+        $bunbougu->detail = $request->input(['detail']);
+        $bunbougu->user_id = \Auth::user()->id;
+        $bunbougu->save(); 
 
-        if(!empty($result)) {
+        if(!empty($bunbougu)) {
             session()->flash('flash_message',$request->name.'  を登録しました');
         } else {
             session()->flash('flash_message','登録失敗');
@@ -93,7 +105,7 @@ class BunbouguController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id)
+    public function update(Request $request,$bunbougu)
     {
          $request->validate([
             'name'           => 'required|max:20',
@@ -102,11 +114,17 @@ class BunbouguController extends Controller
             'detail'         => 'required|max:140',
         ]);
 
-        $hasData = Bunbougu::find($id);
-        $hasData->update($request->all());
+        // $hasData = Bunbougu::find($id);
+        // $hasData->update($request->all());
+        $bunbougu->name = $request->input(['name']);
+        $bunbougu->price = $request->input(['price']);
+        $bunbougu->classification = $request->input(['classification']);
+        $bunbougu->detail = $request->input(['detail']);
+        $bunbougu->user_id = \Auth::user()->id;
+        $bunbougu->save(); 
 
         
-        if($hasData){
+        if($bunbougu){
             session()->flash('flash_message','変更しました');
         } else {
             session()->flash('flash_error_message','変更失敗');

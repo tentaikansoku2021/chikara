@@ -16,5 +16,9 @@ class Bunbougu extends Model
         'price',
         'classification',
         'detail',
+        'user_id'
     ];
+    public function user() {
+        return $this->belongsTo(User::class,'user_id');
+    }
 }

@@ -17,6 +17,7 @@
     <body class="font-sans antialiased">
        <div class="max-w-screen-lg mx-auto px-8">
         <h1 class="text-xl font-bold pt-4">受注入力システム</h1>
+        <x-primary-button><a href="{{route('bunbougu.index')}}">メイン</a></x-primary-button>
         <main>
             {{ $slot }}
         </main>

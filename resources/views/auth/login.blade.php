@@ -40,7 +40,7 @@
             @endif
 
             <x-primary-button class="ms-3">
-                {{ __('Log in') }}
+                <a href="{{route('bunbougu.index')}}">{{ __('Log in') }}</a>
             </x-primary-button>
         </div>
     </form>

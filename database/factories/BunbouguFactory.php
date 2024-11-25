@@ -23,6 +23,7 @@ class BunbouguFactory extends Factory
             'price'          => $this->faker->numberBetween(50,999),
             'classification' => $this->faker->numberBetween(1,3),
             'detail'         => $this->faker->realText(50),
+            'user_id'        => $this->faker->numberBetween(2,3)
         ];
     }
 }
